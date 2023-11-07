@@ -1,43 +1,22 @@
-const formAddToDo = document.querySelector('.form-add-todo ');
+const formSearch = document.querySelector('.form-search');
 const todosContainer = document.querySelector('.todos-container');
-const inputSeacchTodo = document.querySelector('.form-search input');
 
-formAddToDo.addEventListener('submit', event => {
+
+formSearch.addEventListener('submit', event => {
     event.preventDefault();
 
-    const inputValue = event.target.add.value.trim();
-
-    if(inputValue.length) {
-        todosContainer.innerHTML += `
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <span>${inputValue}</span>
-        <i class="far fa-trash-alt delete"></i>
-    </li>`;
-
-    event.target.reset();
-    }
 });
 
 todosContainer.addEventListener('click', event => {
-    const clickedElement = event.target;
-    if(Array.from(clickedElement.classList).includes('delete')){
-        clickedElement.parentElement.remove();
-    };
+    const btnRemove = Array.from(event.target.classList);
+    const listRemove = event.target;
+
+    /* console.log(listRemove.parentElement);
+    console.log(todosContainer.children); */
+
+    if(btnRemove.includes('delete')) {
+        listRemove.parentElement.classList.remove('d-flex');
+        listRemove.parentElement.classList.add('d-none');
+    }
 });
 
-inputSeacchTodo.addEventListener('input', event => {
-    const inputValue = event.target.value.trim().toLowerCase(); 
-    Array.from(todosContainer.children)
-        .filter(todo => !todo.textContent.toLowerCase().includes(inputValue))
-        .forEach(todo => {
-            todo.classList.remove('d-flex');
-            todo.classList.add('hidden');
-        });
-
-    Array.from(todosContainer.children)
-        .filter(todo => todo.textContent.toLowerCase().includes(inputValue))
-        .forEach(todo => {
-            todo.classList.remove('hidden');
-            todo.classList.add('d-flex');
-        });
-});
